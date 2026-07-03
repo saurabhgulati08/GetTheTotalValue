@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Number Scanner</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background:#f2f5f9;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    padding:20px;
+}
+
+.container{
+    width:100%;
+    max-width:420px;
+    background:#fff;
+    border-radius:15px;
+    padding:20px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.15);
+}
+
+.logo{
+    text-align:center;
+    font-size:55px;
+}
+
+h2{
+    text-align:center;
+    margin-top:10px;
+    color:#333;
+}
+
+p{
+    text-align:center;
+    color:#777;
+    margin-top:8px;
+    margin-bottom:20px;
+}
+
+.upload-box{
+    border:2px dashed #4CAF50;
+    border-radius:12px;
+    padding:25px;
+    text-align:center;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.upload-box:hover{
+    background:#f8fff8;
+}
+
+.upload-box input{
+    display:none;
+}
+
+.upload-btn{
+    background:#4CAF50;
+    color:#fff;
+    padding:12px 22px;
+    border-radius:8px;
+    display:inline-block;
+    font-weight:bold;
+}
+
+img{
+    width:100%;
+    margin-top:20px;
+    border-radius:10px;
+    display:none;
+}
+
+button{
+    width:100%;
+    margin-top:20px;
+    padding:15px;
+    background:#007BFF;
+    color:white;
+    border:none;
+    border-radius:10px;
+    font-size:18px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#005fd1;
+}
+
+.result{
+    margin-top:20px;
+    background:#f8f8f8;
+    border-radius:10px;
+    padding:15px;
+}
+
+.result h3{
+    color:#007BFF;
+    margin-bottom:10px;
+}
+
+.total{
+    font-size:24px;
+    color:#4CAF50;
+    font-weight:bold;
+    text-align:center;
+    margin-top:15px;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="logo">📷</div>
+
+<h2>Number Scanner</h2>
+
+<p>Capture or choose an image containing numbers.</p>
+
+<label class="upload-box">
+
+<span class="upload-btn">📁 Choose Image</span>
+
+<input type="file" id="camera" accept="image/*">
+
+</label>
+
+<img id="preview">
+
+<button id="scanBtn">
+🔍 Scan Numbers
+</button>
+
+<div class="result">
+
+<h3>Detected Numbers</h3>
+
+<div id="numbers">
+No numbers scanned.
+</div>
+
+<div class="total">
+Total: <span id="sum">0</span>
+</div>
+
+</div>
+
+</div>
+
+<script>
+const camera=document.getElementById("camera");
+const preview=document.getElementById("preview");
+
+camera.addEventListener("change",function(){
+
+if(this.files.length){
+
+preview.src=URL.createObjectURL(this.files[0]);
+
+preview.style.display="block";
+
+}
+
+});
+</script>
+
+</body>
+</html>
