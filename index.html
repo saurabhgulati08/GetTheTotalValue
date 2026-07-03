@@ -161,23 +161,74 @@ Total: <span id="sum">0</span>
 </div>
 
 </div>
+<script src="https://unpkg.com/tesseract.js@5/dist/tesseract.min.js"></script>
 
 <script>
-const camera=document.getElementById("camera");
-const preview=document.getElementById("preview");
+const camera = document.getElementById("camera");
+const preview = document.getElementById("preview");
+const scanBtn = document.getElementById("scanBtn");
+const numbers = document.getElementById("numbers");
+const sum = document.getElementById("sum");
 
-camera.addEventListener("change",function(){
+let selectedImage = null;
 
-if(this.files.length){
+camera.addEventListener("change", function () {
 
-preview.src=URL.createObjectURL(this.files[0]);
+    if (this.files.length > 0) {
 
-preview.style.display="block";
+        selectedImage = this.files[0];
 
-}
+        preview.src = URL.createObjectURL(selectedImage);
+        preview.style.display = "block";
+    }
+});
+
+scanBtn.addEventListener("click", async () => {
+
+    if (!selectedImage) {
+        alert("Please choose an image first.");
+        return;
+    }
+
+    scanBtn.innerHTML = "Scanning...";
+    scanBtn.disabled = true;
+
+    try {
+
+        const { data: { text } } = await Tesseract.recognize(
+            selectedImage,
+            "eng"
+        );
+
+        const found = text.match(/\d+(\.\d+)?/g);
+
+        if (!found) {
+
+            numbers.innerHTML = "No numbers found";
+            sum.innerHTML = "0";
+
+        } else {
+
+            numbers.innerHTML = found.join(", ");
+
+            let total = 0;
+
+            found.forEach(n => total += Number(n));
+
+            sum.innerHTML = total;
+        }
+
+    } catch (e) {
+
+        alert("Error scanning image");
+        console.log(e);
+
+    }
+
+    scanBtn.innerHTML = "🔍 Scan Numbers";
+    scanBtn.disabled = false;
 
 });
 </script>
-
 </body>
 </html>
